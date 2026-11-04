@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0",
+  "title": "法规标准库知识图谱（初始版）",
+  "language": "zh-CN",
+  "source_repository": "https://github.com/Zzx110814/-",
+  "generated_at": "2026-11-04",
+  "scope": "仓库根目录全部文件：17 个 PDF 文件和 README.md。",
+  "limitations": [
+    "当前图谱以仓库文件名、路径和 Git 对象 SHA 为依据建立文件索引。PDF 正文尚未解析，因此主题与关系仅在文件名明确表达时建立。",
+    "没有从文件名无法确认的标准名称、条款内容、引用、替代/废止关系或生效状态均不作推断。",
+    "topic_inferred_from_filename 关系表示根据标题文本归类，不代表文件正文已经验证该主题。"
+  ],
+  "nodes": [
+    {"id":"doc:28708-2012-gbt-e-300.pdf","type":"document","title":"28708-2012-gbt-e-300.pdf","path":"28708-2012-gbt-e-300.pdf","format":"PDF","sha":"5ec118401a74223c8bd610452eb6071e257e4232","size_bytes":445248},
+    {"id":"doc:6441-1986-gbt-e-300.pdf","type":"document","title":"6441-1986-gbt-e-300.pdf","path":"6441-1986-gbt-e-300.pdf","format":"PDF","standard_number":"6441","edition_year":"1986","sha":"98886196cdcb270e832071dc4b2f6569bcf97480","size_bytes":812635},
+    {"id":"doc:GB 15630-1995.pdf","type":"document","title":"GB 15630-1995.pdf","path":"GB 15630-1995.pdf","format":"PDF","standard_number":"GB 15630","edition_year":"1995","sha":"091314501bdbf82f96f2268a49a8c346e713c0a5","size_bytes":468641},
+    {"id":"doc:GB+15603-2022.pdf","type":"document","title":"GB+15603-2022.pdf","path":"GB+15603-2022.pdf","format":"PDF","standard_number":"GB 15603","edition_year":"2022","sha":"52888f2cb3d850c6e4190280df3113a7380b99ec","size_bytes":1276735},
+    {"id":"doc:GB+3836.15-2024.pdf","type":"document","title":"GB+3836.15-2024.pdf","path":"GB+3836.15-2024.pdf","format":"PDF","standard_number":"GB 3836.15","edition_year":"2024","sha":"e8ef57662e9aa7256992738e1cd3514f2c13600d","size_bytes":946732},
+    {"id":"doc:GB+46768-2025.pdf","type":"document","title":"GB+46768-2025.pdf","path":"GB+46768-2025.pdf","format":"PDF","standard_number":"GB 46768","edition_year":"2025","sha":"2df31f3859ac68c82cc15586e9c660ea1f7bb728","size_bytes":6332974},
+    {"id":"doc:GB+6441-2025 生产安全事故分类与编码.pdf","type":"document","title":"GB+6441-2025 生产安全事故分类与编码.pdf","path":"GB+6441-2025 生产安全事故分类与编码.pdf","format":"PDF","standard_number":"GB 6441","edition_year":"2025","sha":"204b1fc8fb15e0fbe89775e67b52a5ad01d0a439","size_bytes":289878},
+    {"id":"doc:GBT 35320-2017危险与可操作性分析应用指南.pdf","type":"document","title":"GBT 35320-2017危险与可操作性分析应用指南.pdf","path":"GBT 35320-2017危险与可操作性分析应用指南.pdf","format":"PDF","standard_number":"GB/T 35320","edition_year":"2017","sha":"d0df732942aac4cfbf163cbd45e6bd26f68bb2d5","size_bytes":3934281},
+    {"id":"doc:GBT+13861-2022.pdf","type":"document","title":"GBT+13861-2022.pdf","path":"GBT+13861-2022.pdf","format":"PDF","standard_number":"GB/T 13861","edition_year":"2022","sha":"68fe92ba0bb533f3df08aa707f263eedd101d852","size_bytes":1003548},
+    {"id":"doc:GBT+20801.1-2020.pdf","type":"document","title":"GBT+20801.1-2020.pdf","path":"GBT+20801.1-2020.pdf","format":"PDF","standard_number":"GB/T 20801.1","edition_year":"2020","sha":"66b17b798b2cb7a032984a2c0b6b3d7bf192ebab","size_bytes":535781},
+    {"id":"doc:GBT+31032-2023.pdf","type":"document","title":"GBT+31032-2023.pdf","path":"GBT+31032-2023.pdf","format":"PDF","standard_number":"GB/T 31032","edition_year":"2023","sha":"1aa1c9b2e2e94cf8b5abcb7b88c5b17b4d8be03a","size_bytes":8574656},
+    {"id":"doc:GBT+38144.1-2019+眼面部防护+应急喷淋和洗眼设备+第1部分：技术要求.pdf","type":"document","title":"GBT+38144.1-2019+眼面部防护+应急喷淋和洗眼设备+第1部分：技术要求.pdf","path":"GBT+38144.1-2019+眼面部防护+应急喷淋和洗眼设备+第1部分：技术要求.pdf","format":"PDF","standard_number":"GB/T 38144.1","edition_year":"2019","sha":"52dd85932ebe4c6c9a74e635f4e8e3ac583dde03","size_bytes":1343542},
+    {"id":"doc:GBT+39325-2020.pdf","type":"document","title":"GBT+39325-2020.pdf","path":"GBT+39325-2020.pdf","format":"PDF","standard_number":"GB/T 39325","edition_year":"2020","sha":"0646ba82bbf3cb4479a8067fc0bcd819251ca2ec","size_bytes":1191918},
+    {"id":"doc:工贸企业重大事故隐患判定标准.pdf","type":"document","title":"工贸企业重大事故隐患判定标准.pdf","path":"工贸企业重大事故隐患判定标准.pdf","format":"PDF","sha":"56f35be833b01bdd7b44827e4dae21a300980b8e","size_bytes":287145},
+    {"id":"doc:建设项目安全设施“三同时”监督管理办法.pdf","type":"document","title":"建设项目安全设施“三同时”监督管理办法.pdf","path":"建设项目安全设施“三同时”监督管理办法.pdf","format":"PDF","sha":"040ce0b55cd3a76d742ff422e12c714c5a377c53","size_bytes":166462},
+    {"id":"doc:建设项目环境风险评价技术导则.pdf","type":"document","title":"建设项目环境风险评价技术导则.pdf","path":"建设项目环境风险评价技术导则.pdf","format":"PDF","sha":"7a83b46851a2818b830495f5604695840fffe1e8","size_bytes":2060493},
+    {"id":"doc:建设项目职业病防护设施“三同时”监督管理办法.pdf","type":"document","title":"建设项目职业病防护设施“三同时”监督管理办法.pdf","path":"建设项目职业病防护设施“三同时”监督管理办法.pdf","format":"PDF","sha":"bd3481c6a0f3ee591be51768d2106021e5ed8955","size_bytes":3709325},
+    {"id":"doc:README.md","type":"document","title":"README.md","path":"README.md","format":"Markdown","sha":"718d349f10c7cec36c96cae376f9b1a998050fd4","size_bytes":20},
+    {"id":"topic:危险与可操作性分析","type":"topic","name":"危险与可操作性分析"},
+    {"id":"topic:生产安全事故分类与编码","type":"topic","name":"生产安全事故分类与编码"},
+    {"id":"topic:工贸企业重大事故隐患","type":"topic","name":"工贸企业重大事故隐患"},
+    {"id":"topic:建设项目安全设施三同时","type":"topic","name":"建设项目安全设施“三同时”"},
+    {"id":"topic:建设项目环境风险评价","type":"topic","name":"建设项目环境风险评价"},
+    {"id":"topic:建设项目职业病防护设施三同时","type":"topic","name":"建设项目职业病防护设施“三同时”"},
+    {"id":"topic:眼面部防护与应急喷淋洗眼设备","type":"topic","name":"眼面部防护、应急喷淋和洗眼设备"}
+  ],
+  "edges": [
+    {"source":"doc:GB+6441-2025 生产安全事故分类与编码.pdf","target":"doc:6441-1986-gbt-e-300.pdf","type":"same_standard_number_as","evidence":"文件名中均含标准号6441；不据此判断替代或废止关系。","confidence":"high"},
+    {"source":"doc:GBT 35320-2017危险与可操作性分析应用指南.pdf","target":"topic:危险与可操作性分析","type":"topic_inferred_from_filename","evidence":"文件名明确包含“危险与可操作性分析”。","confidence":"high"},
+    {"source":"doc:GB+6441-2025 生产安全事故分类与编码.pdf","target":"topic:生产安全事故分类与编码","type":"topic_inferred_from_filename","evidence":"文件名明确包含“生产安全事故分类与编码”。","confidence":"high"},
+    {"source":"doc:工贸企业重大事故隐患判定标准.pdf","target":"topic:工贸企业重大事故隐患","type":"topic_inferred_from_filename","evidence":"文件名明确包含“工贸企业重大事故隐患”。","confidence":"high"},
+    {"source":"doc:建设项目安全设施“三同时”监督管理办法.pdf","target":"topic:建设项目安全设施三同时","type":"topic_inferred_from_filename","evidence":"文件名明确包含建设项目安全设施及“三同时”。","confidence":"high"},
+    {"source":"doc:建设项目环境风险评价技术导则.pdf","target":"topic:建设项目环境风险评价","type":"topic_inferred_from_filename","evidence":"文件名明确包含“建设项目环境风险评价”。","confidence":"high"},
+    {"source":"doc:建设项目职业病防护设施“三同时”监督管理办法.pdf","target":"topic:建设项目职业病防护设施三同时","type":"topic_inferred_from_filename","evidence":"文件名明确包含建设项目职业病防护设施及“三同时”。","confidence":"high"},
+    {"source":"doc:GBT+38144.1-2019+眼面部防护+应急喷淋和洗眼设备+第1部分：技术要求.pdf","target":"topic:眼面部防护与应急喷淋洗眼设备","type":"topic_inferred_from_filename","evidence":"文件名明确包含眼面部防护、应急喷淋和洗眼设备。","confidence":"high"},
+    {"source":"doc:建设项目安全设施“三同时”监督管理办法.pdf","target":"doc:建设项目职业病防护设施“三同时”监督管理办法.pdf","type":"shared_phrase_in_title","evidence":"两个文件名均包含建设项目和“三同时”；具体法规关联尚未核对正文。","confidence":"medium"}
+  ]
+}
