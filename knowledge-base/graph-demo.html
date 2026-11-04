@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>法规标准库 · 交互式知识图谱示例</title>
+  <style>
+    :root{color-scheme:dark;--bg:#0b1020;--panel:#111a2e;--line:#24314d;--text:#e7edf8;--muted:#91a0b8;--blue:#58a6ff;--teal:#42d3c2;--gold:#ffca66}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;overflow:hidden}
+    header{height:68px;display:flex;align-items:center;gap:16px;padding:0 22px;background:#0e1629;border-bottom:1px solid var(--line)}
+    h1{font-size:17px;margin:0;font-weight:650;white-space:nowrap}.hint{color:var(--muted);font-size:12px}
+    .search{margin-left:auto;display:flex;gap:8px}.search input{width:min(300px,38vw);padding:9px 12px;border:1px solid var(--line);border-radius:8px;background:#0a1222;color:var(--text);outline:none}.search input:focus{border-color:var(--blue)}
+    button{border:1px solid var(--line);background:#17233a;color:var(--text);border-radius:8px;padding:8px 11px;cursor:pointer}button:hover{border-color:var(--blue)}
+    main{display:grid;grid-template-columns:1fr 300px;height:calc(100vh - 68px)}
+    #graph{width:100%;height:100%;display:block;cursor:grab;touch-action:none}#graph.dragging{cursor:grabbing}
+    aside{border-left:1px solid var(--line);background:var(--panel);padding:18px;overflow:auto}aside h2{font-size:15px;margin:0 0 12px}aside p{color:var(--muted);margin:7px 0}.card{padding:12px;border:1px solid var(--line);border-radius:10px;margin-bottom:14px;background:#0e172a}.tag{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;background:#1a3352;color:#8dc5ff;margin:2px 4px 2px 0}.tag.topic{background:#123a38;color:#78e5d6}.tag.note{background:#3a2f1d;color:#ffd98e}
+    .node circle{stroke-width:2}.node.doc circle{fill:#162c49;stroke:var(--blue)}.node.topic circle{fill:#123a38;stroke:var(--teal)}.node.selected circle{stroke:#fff;stroke-width:4}.node.dim{opacity:.13}.node text{fill:var(--text);font-size:12px;text-anchor:middle;pointer-events:none}.node .sub{fill:var(--muted);font-size:10px}
+    .edge line{stroke:#53647f;stroke-width:1.6;opacity:.76}.edge text{fill:#9aa9c1;font-size:10px;text-anchor:middle;paint-order:stroke;stroke:var(--bg);stroke-width:4px;stroke-linejoin:round;pointer-events:none}.edge.dim{opacity:.08}.edge.active line{stroke:var(--gold);stroke-width:2.5;opacity:1}.edge.active text{fill:var(--gold)}
+    .legend{display:flex;gap:14px;margin-top:12px;color:var(--muted);font-size:12px}.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px}.empty{color:var(--muted);font-size:13px}
+    @media(max-width:760px){main{grid-template-columns:1fr;height:calc(100vh - 68px)}aside{position:absolute;right:10px;bottom:10px;width:min(280px,78vw);max-height:34vh;border:1px solid var(--line);border-radius:12px;padding:12px;box-shadow:0 8px 30px #0008}header{padding:0 12px}.hint{display:none}}
+  </style>
+</head>
+<body>
+<header>
+  <h1>法规标准库 · 交互式知识图谱</h1>
+  <span class="hint">拖动节点 · 空白处平移 · 滚轮缩放 · 点击查看关联</span>
+  <div class="search"><input id="search" type="search" placeholder="搜索文档或主题…" aria-label="搜索节点"><button id="reset">重置视图</button></div>
+</header>
+<main>
+  <svg id="graph" role="img" aria-label="可交互的法规标准知识图谱">
+    <g id="viewport"><g id="edges"></g><g id="nodes"></g></g>
+  </svg>
+  <aside>
+    <div class="card"><h2 id="detail-title">点击图谱中的节点</h2><div id="detail-body"><p>节点可拖拽，画布可平移和缩放；点击节点可高亮显示它的直接关系。</p></div></div>
+    <div class="card"><h2>关系说明</h2><p>“标题提及”表示主题来自文件名，不表示已核对 PDF 正文。</p><p>6441 两份文件只按编号关联，不推断替代、废止或现行状态。</p></div>
+    <div class="card"><h2>图例</h2><p><span class="tag">文档</span><span class="tag topic">主题</span></p><p class="empty">此页是交互式案例图谱。节点和关系是标题级示例，并非正文抽取结果。</p></div>
+  </aside>
+</main>
+<script>
+(() => {
+  const data = {
+    nodes: [
+      {id:'d35320',type:'doc',label:'GB/T 35320-2017',sub:'危险与可操作性分析应用指南',detail:'文件：GBT 35320-2017危险与可操作性分析应用指南.pdf\n编号和主题来自文件名。'},
+      {id:'t-hazop',type:'topic',label:'危险与可操作性分析',sub:'主题',detail:'从文件名提取的主题词，尚未核对 PDF 正文。'},
+      {id:'d6441new',type:'doc',label:'GB 6441-2025',sub:'生产安全事故分类与编码',detail:'文件：GB+6441-2025 生产安全事故分类与编码.pdf\n主题来自文件名。'},
+      {id:'d6441old',type:'doc',label:'6441-1986',sub:'gbt-e-300.pdf',detail:'文件：6441-1986-gbt-e-300.pdf\n标准名称尚未从正文确认。'},
+      {id:'t-accident',type:'topic',label:'生产安全事故分类与编码',sub:'主题',detail:'从 2025 文件名提取的主题词。'},
+      {id:'d-hidden',type:'doc',label:'工贸企业重大事故隐患',sub:'判定标准',detail:'文件：工贸企业重大事故隐患判定标准.pdf\n标题级主题关联。'},
+      {id:'t-hidden',type:'topic',label:'重大事故隐患',sub:'主题',detail:'从文件名提取的主题词。'},
+      {id:'d-safety',type:'doc',label:'建设项目安全设施',sub:'“三同时”监督管理办法',detail:'文件：建设项目安全设施“三同时”监督管理办法.pdf'},
+      {id:'d-occup',type:'doc',label:'职业病防护设施',sub:'“三同时”监督管理办法',detail:'文件：建设项目职业病防护设施“三同时”监督管理办法.pdf'},
+      {id:'t-three',type:'topic',label:'建设项目“三同时”',sub:'共同标题主题',detail:'由两个文件标题的共同词语归纳，不代表正文中存在直接引用关系。'}
+    ],
+    edges: [
+      {source:'d35320',target:'t-hazop',label:'标题提及'},
+      {source:'d6441new',target:'t-accident',label:'标题提及'},
+      {source:'d6441new',target:'d6441old',label:'编号相同（不推断替代）'},
+      {source:'d-hidden',target:'t-hidden',label:'标题提及'},
+      {source:'d-safety',target:'t-three',label:'标题主题'},
+      {source:'d-occup',target:'t-three',label:'标题主题'}
+    ]
+  };
+  const svg=document.querySelector('#graph'), viewport=document.querySelector('#viewport'), edgesG=document.querySelector('#edges'), nodesG=document.querySelector('#nodes');
+  const NS='http://www.w3.org/2000/svg'; let W=0,H=0,scale=1,tx=0,ty=0,selected=null,dragNode=null,pan=null;
+  const byId=new Map(data.nodes.map(n=>[n.id,n]));
+  data.nodes.forEach((n,i)=>{const a=i/data.nodes.length*Math.PI*2;n.x=W/2+Math.cos(a)*220;n.y=H/2+Math.sin(a)*160;n.vx=0;n.vy=0;n.fx=null;n.fy=null});
+  function el(name,attrs={}){const e=document.createElementNS(NS,name);for(const [k,v] of Object.entries(attrs))e.setAttribute(k,v);return e}
+  const edgeEls=data.edges.map(e=>{const g=el('g',{class:'edge'}),line=el('line'),label=el('text');label.textContent=e.label;g.append(line,label);edgesG.append(g);e.el=g;e.line=line;e.text=label;return e});
+  const nodeEls=data.nodes.map(n=>{const g=el('g',{class:`node ${n.type}`,'data-id':n.id});g.append(el('circle',{r:n.type==='topic'?35:41}));const text=el('text');const l1=el('tspan',{x:0,dy:'-.15em'});l1.textContent=n.label;const l2=el('tspan',{x:0,dy:'1.55em',class:'sub'});l2.textContent=n.sub;text.append(l1,l2);g.append(text);nodesG.append(g);n.el=g;g.addEventListener('pointerdown',ev=>startNode(ev,n));g.addEventListener('click',ev=>{ev.stopPropagation();select(n)});return n});
+  function resize(){const r=svg.getBoundingClientRect();W=r.width;H=r.height;svg.setAttribute('viewBox',`0 0 ${W} ${H}`);data.nodes.forEach(n=>{if(n.x===0)n.x=W/2;if(n.y===0)n.y=H/2});tick()};new ResizeObserver(resize).observe(svg);
+  function transform(){viewport.setAttribute('transform',`translate(${tx} ${ty}) scale(${scale})`)}
+  function point(ev){const r=svg.getBoundingClientRect();return {x:(ev.clientX-r.left-tx)/scale,y:(ev.clientY-r.top-ty)/scale}}
+  function startNode(ev,n){if(ev.button!==0)return;ev.stopPropagation();dragNode=n;n.fx=n.x;n.fy=n.y;n.el.setPointerCapture(ev.pointerId);svg.classList.add('dragging')}
+  svg.addEventListener('pointermove',ev=>{if(dragNode){const p=point(ev);dragNode.fx=p.x;dragNode.fy=p.y;dragNode.x=p.x;dragNode.y=p.y;tick()}else if(pan){tx=ev.clientX-pan.x;ty=ev.clientY-pan.y;transform()}});
+  svg.addEventListener('pointerup',()=>{if(dragNode){dragNode.fx=null;dragNode.fy=null;dragNode=null;svg.classList.remove('dragging')}pan=null});
+  svg.addEventListener('pointerdown',ev=>{if(ev.target===svg||ev.target===viewport||ev.target===edgesG){pan={x:ev.clientX-tx,y:ev.clientY-ty};svg.classList.add('dragging')}});
+  svg.addEventListener('click',ev=>{if(ev.target===svg){selected=null;updateHighlight();document.querySelector('#detail-title').textContent='点击图谱中的节点';document.querySelector('#detail-body').innerHTML='<p>拖动节点、平移画布、滚轮缩放；点击节点查看关联。</p>'}});
+  svg.addEventListener('wheel',ev=>{ev.preventDefault();const before=point(ev),factor=ev.deltaY<0?1.12:.89;scale=Math.max(.45,Math.min(2.5,scale*factor));const r=svg.getBoundingClientRect();tx=ev.clientX-r.left-before.x*scale;ty=ev.clientY-r.top-before.y*scale;transform()},{passive:false});
+  function select(n){selected=n;document.querySelector('#detail-title').textContent=n.label;const type=n.type==='doc'?'文档':'主题';document.querySelector('#detail-body').innerHTML=`<span class="tag ${n.type==='topic'?'topic':''}">${type}</span><p>${escapeHtml(n.sub||'')}</p><p style="white-space:pre-line">${escapeHtml(n.detail||'')}</p>`;updateHighlight()}
+  function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+  function updateHighlight(){const neighbors=new Set(selected?[selected.id]:[]);if(selected)edgeEls.forEach(e=>{if(e.source===selected.id){neighbors.add(e.target)}if(e.target===selected.id){neighbors.add(e.source)}});nodeEls.forEach(n=>{n.el.classList.toggle('selected',!!selected&&n.id===selected.id);n.el.classList.toggle('dim',!!selected&&!neighbors.has(n.id))});edgeEls.forEach(e=>{const active=!!selected&&(e.source===selected.id||e.target===selected.id);e.el.classList.toggle('active',active);e.el.classList.toggle('dim',!!selected&&!active)})}
+  function tick(){if(!W||!H)return;const cx=W/2,cy=H/2;for(let iter=0;iter<2;iter++){
+    data.nodes.forEach(n=>{if(n.fx!=null){n.x=n.fx;n.y=n.fy;return}n.vx+=(cx-n.x)*.0015;n.vy+=(cy-n.y)*.0015;});
+    for(let i=0;i<data.nodes.length;i++)for(let j=i+1;j<data.nodes.length;j++){const a=data.nodes[i],b=data.nodes[j],dx=b.x-a.x,dy=b.y-a.y,d2=dx*dx+dy*dy+1,force=800/d2,fx=dx*force,fy=dy*force;if(a.fx==null){a.vx-=fx;a.vy-=fy}if(b.fx==null){b.vx+=fx;b.vy+=fy}}
+    edgeEls.forEach(e=>{const a=byId.get(e.source),b=byId.get(e.target),dx=b.x-a.x,dy=b.y-a.y,d=Math.hypot(dx,dy)||1,force=(d-170)*.002,fx=dx/d*force,fy=dy/d*force;if(a.fx==null){a.vx+=fx;a.vy+=fy}if(b.fx==null){b.vx-=fx;b.vy-=fy}});
+    data.nodes.forEach(n=>{if(n.fx==null){n.vx*=.88;n.vy*=.88;n.x+=n.vx;n.y+=n.vy}})
+  }
+  nodeEls.forEach(n=>n.el.setAttribute('transform',`translate(${n.x} ${n.y})`));edgeEls.forEach(e=>{const a=byId.get(e.source),b=byId.get(e.target),mx=(a.x+b.x)/2,my=(a.y+b.y)/2;e.line.setAttribute('x1',a.x);e.line.setAttribute('y1',a.y);e.line.setAttribute('x2',b.x);e.line.setAttribute('y2',b.y);e.text.setAttribute('x',mx);e.text.setAttribute('y',my-7)});transform()}
+  function animate(){tick();requestAnimationFrame(animate)}animate();
+  document.querySelector('#search').addEventListener('input',ev=>{const q=ev.target.value.trim().toLowerCase();nodeEls.forEach(n=>n.el.classList.toggle('dim',!!q&&!(`${n.label} ${n.sub}`.toLowerCase().includes(q))))});
+  document.querySelector('#reset').addEventListener('click',()=>{scale=1;tx=0;ty=0;selected=null;document.querySelector('#search').value='';nodeEls.forEach(n=>n.el.classList.remove('dim','selected'));edgeEls.forEach(e=>e.el.classList.remove('dim','active'));transform()});
+  resize();
+})();
+</script>
+</body>
+</html>
